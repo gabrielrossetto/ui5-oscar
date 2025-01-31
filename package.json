@@ -1,0 +1,60 @@
+{
+  "name": "oscar-challenge",
+  "version": "1.0.0",
+  "description": "A simple CAP+UI5 project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js/cds-typer": "^0.32.1",
+    "@sap/cds": "^8",
+    "express": "^4",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.9.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/ux-specification": "UI5-1.129",
+    "axios": "^1.7.7",
+    "cds-plugin-ui5": "^0.9.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "start": "cds serve",
+    "start:ts": "cds-tsx watch",
+    "build": "cds build --clean"
+  },
+  "sapux": [
+    "app/oscar"
+  ],
+  "cds": {
+    "requires": {
+      "[development]": {
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "alice": {
+              "roles": [
+                "support"
+              ]
+            },
+            "bob": {
+              "roles": [
+                "support"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "services": {
+      "OscarService": {
+        "impl": "srv/service.ts"
+      }
+    }
+  },
+  "workspaces": [
+    "app/*"
+  ]
+}

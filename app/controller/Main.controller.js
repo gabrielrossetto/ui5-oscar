@@ -21,6 +21,10 @@ sap.ui.define(
         );
       },
 
+      _reloadData: function () {
+        this._loadAdditionalData();
+      },
+
       _loadAdditionalData: async function () {
         var oModel = this.getView().getModel("winners");
 
@@ -71,23 +75,43 @@ sap.ui.define(
       },
 
       onSearch: function (oEvent) {
-        var sQuery = oEvent.getParameter("newValue");
+        var sQuery = oEvent.getParameter("newValue").toLowerCase();
         var oBinding = this.byId("winnersTable").getBinding("items");
-        var oFilter = new sap.ui.model.Filter(
-          "name",
-          sap.ui.model.FilterOperator.Contains,
-          sQuery
-        );
-        oBinding.filter([oFilter]);
+
+        if (!sQuery) {
+          oBinding.filter([]);
+          return;
+        }
+
+        var aFilters = [
+          new sap.ui.model.Filter(
+            "actorName",
+            sap.ui.model.FilterOperator.Contains,
+            sQuery
+          ),
+          new sap.ui.model.Filter(
+            "filmTitle",
+            sap.ui.model.FilterOperator.Contains,
+            sQuery
+          ),
+          new sap.ui.model.Filter(
+            "categoryName",
+            sap.ui.model.FilterOperator.Contains,
+            sQuery
+          ),
+        ];
+
+        var oCombinedFilter = new sap.ui.model.Filter({
+          filters: aFilters,
+          and: false,
+        });
+
+        oBinding.filter(oCombinedFilter);
       },
 
       onAddAward: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("AwardForm", {});
-      },
-
-      _reloadData: function () {
-        this._loadAdditionalData();
       },
 
       onAwardPress: function (oEvent) {

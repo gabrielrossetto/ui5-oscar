@@ -111,7 +111,7 @@ sap.ui.define(
 
       onAddAward: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("AwardForm", {});
+        oRouter.navTo("AwardForm", {}, true);
       },
 
       onAwardPress: function (oEvent) {

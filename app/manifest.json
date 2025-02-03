@@ -16,6 +16,39 @@
     }
   },
   "sap.ui5": {
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "Main",
+          "target": "Main"
+        },
+        {
+          "pattern": "awardForm",
+          "name": "AwardForm",
+          "target": "AwardForm"
+        }
+      ],
+      "targets": {
+        "Main": {
+          "viewName": "Main",
+          "viewPath": "oscar.challenge.view",
+          "viewLevel": 1
+        },
+        "AwardForm": {
+          "viewName": "AwardForm",
+          "viewPath": "oscar.challenge.view",
+          "viewLevel": 2
+        }
+      }
+    },
     "rootView": {
       "viewName": "oscar.challenge.view.Main",
       "type": "XML",

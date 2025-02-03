@@ -25,6 +25,11 @@ sap.ui.define(
         });
 
         this.setModel(oModel, "winners");
+        this.setModel(oModel, "actors");
+        this.setModel(oModel, "films");
+        this.setModel(oModel, "categories");
+
+        this.getRouter().initialize();
       },
     });
   }

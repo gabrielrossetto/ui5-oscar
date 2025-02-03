@@ -1,0 +1,33 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  controllerName="oscar.challenge.controller.AwardForm">
+  <Page title="Award Form">
+    <content>
+      <VBox class="sapUiSmallMargin">
+        <Label text="Actor/Actress" required="true" />
+        <Select id="actorSelect" items="{actors>/Actors}">
+          <core:Item key="{actors>ID}" text="{actors>name}" />
+        </Select>
+
+        <Select id="movieSelect" items="{films>/Films}">
+          <core:Item key="{films>ID}" text="{films>title}" />
+        </Select>
+
+        <Select id="categorySelect" items="{categories>/Categories}">
+          <core:Item key="{categories>ID}" text="{categories>name}" />
+        </Select>
+
+      </VBox>
+    </content>
+
+    <footer>
+      <Bar>
+        <contentRight>
+          <Button text="Cancel" press="onCancel" />
+          <Button text="New Award" press="onSaveAward" type="Emphasized" />
+        </contentRight>
+      </Bar>
+    </footer>
+  </Page>
+</mvc:View>

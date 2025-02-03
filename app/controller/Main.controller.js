@@ -3,14 +3,22 @@ sap.ui.define(
   function (Controller, models) {
     "use strict";
     return Controller.extend("oscar.challenge.controller.Main", {
-      onInit: async function () {
+      onInit: function () {
         var oComponent = this.getOwnerComponent();
         var oModel = models.createWinnersModel(oComponent);
         if (!oModel) return;
 
         this.getView().setModel(oModel, "winners");
 
-        await this._loadAdditionalData();
+        this._loadAdditionalData();
+
+        var oEventBus = sap.ui.getCore().getEventBus();
+        oEventBus.subscribe(
+          "AwardsChannel",
+          "AwardAdded",
+          this._reloadData,
+          this
+        );
       },
       _loadAdditionalData: async function () {
         var oModel = this.getView().getModel("winners");
@@ -66,7 +74,11 @@ sap.ui.define(
         oBinding.filter([oFilter]);
       },
       onAddAward: function () {
-        console.log("add New Award click");
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("AwardForm", {}, false);
+      },
+      _reloadData: function () {
+        this._loadAdditionalData();
       },
     });
   }

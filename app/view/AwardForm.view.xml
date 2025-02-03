@@ -27,7 +27,8 @@
       <Bar>
         <contentRight>
           <Button text="Cancel" press="onCancel" />
-          <Button text="New Award" press="onSaveAward" type="Emphasized" />
+          <Button text="{= ${award>/ID} ? 'Save' : 'New Award'}" press="onSaveAward"
+            type="Emphasized" />
         </contentRight>
       </Bar>
     </footer>

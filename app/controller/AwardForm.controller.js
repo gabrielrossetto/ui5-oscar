@@ -35,7 +35,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
           oView.setModel(oModel, "award");
         })
         .catch((error) => {
-          MessageToast.show("Error loading award data.");
           console.error(error);
         });
     },

@@ -11,6 +11,8 @@ sap.ui.define(
       init: function () {
         UIComponent.prototype.init.apply(this, arguments);
 
+        jQuery.sap.includeStyleSheet("css/style.css");
+
         var oServiceUrl =
           this.getMetadata().getManifestEntry("sap.ui5").dataSources.mainService
             .uri;

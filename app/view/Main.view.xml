@@ -1,35 +1,45 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="oscar.challenge.controller.Main">
   <App>
-    <Page title="Oscar Winners">
+    <Page title="Oscar Actors Winners List">
+      <customHeader>
+        <Bar design="Header" class="customBar">
+          <contentLeft>
+            <Title text="Oscar Actors Winners List" />
+          </contentLeft>
+          <contentRight>
+            <SearchField placeholder="Search" liveChange="onSearch" width="400px" />
+            <Button text="New Award" icon="sap-icon://add" press="onAddAward" type="Emphasized" />
+          </contentRight>
+        </Bar>
+      </customHeader>
+
       <content>
-        <SearchField placeholder="Search..." liveChange="onSearch" />
-        <Table id="winnersTable" items="{winners>/Awards}">
+        <Table id="winnersTable" items="{winnersDetailed>/Awards}">
           <columns>
             <Column>
-              <Text text="Name" />
+              <Text text="Actor" />
             </Column>
             <Column>
               <Text text="Movie" />
             </Column>
             <Column>
-              <Text text="Category" />
+              <Text text="Award Category" />
             </Column>
             <Column>
-              <Text text="Year" />
+              <Text text="Award Year" />
             </Column>
           </columns>
           <items>
             <ColumnListItem>
               <cells>
-                <Text text="{winners>actor_ID}" />
-                <Text text="{winners>film_ID}" />
-                <Text text="{winners>category_ID}" />
-                <Text text="{winners>year}" />
+                <Text text="{winnersDetailed>actorName}" />
+                <Text text="{winnersDetailed>filmTitle}" />
+                <Text text="{winnersDetailed>categoryName}" />
+                <Text text="{winnersDetailed>year}" />
               </cells>
             </ColumnListItem>
           </items>
         </Table>
-        <Button text="Add New Award" press="onAddAward" />
       </content>
     </Page>
   </App>

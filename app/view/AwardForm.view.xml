@@ -6,17 +6,19 @@
     <content>
       <VBox class="sapUiSmallMargin">
         <Label text="Actor/Actress" required="true" />
-        <Select id="actorSelect" items="{actors>/Actors}">
-          <core:Item key="{actors>ID}" text="{actors>name}" />
+        <Select id="actorSelect" selectedKey="{award>/actor_ID}" items="{actors>/Actors}">
+          <core:ListItem key="{actors>ID}" text="{actors>name}" />
         </Select>
 
-        <Select id="movieSelect" items="{films>/Films}">
-          <core:Item key="{films>ID}" text="{films>title}" />
+        <Select id="movieSelect" selectedKey="{award>/film_ID}" items="{films>/Films}">
+          <core:ListItem key="{films>ID}" text="{films>title}" />
         </Select>
 
-        <Select id="categorySelect" items="{categories>/Categories}">
-          <core:Item key="{categories>ID}" text="{categories>name}" />
+        <Select id="categorySelect" selectedKey="{award>/category_ID}"
+          items="{categories>/Categories}">
+          <core:ListItem key="{categories>ID}" text="{categories>name}" />
         </Select>
+
 
       </VBox>
     </content>

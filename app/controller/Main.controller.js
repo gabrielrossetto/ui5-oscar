@@ -75,10 +75,18 @@ sap.ui.define(
       },
       onAddAward: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("AwardForm", {}, false);
+        oRouter.navTo("AwardForm", {});
       },
       _reloadData: function () {
         this._loadAdditionalData();
+      },
+      onAwardPress: function (oEvent) {
+        var oItem = oEvent.getSource();
+        var oCtx = oItem.getBindingContext("winnersDetailed");
+        var sAwardId = oCtx.getProperty("ID");
+
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("AwardForm", { awardId: sAwardId });
       },
     });
   }

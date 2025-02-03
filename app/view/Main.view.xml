@@ -30,7 +30,7 @@
             </Column>
           </columns>
           <items>
-            <ColumnListItem>
+            <ColumnListItem type="Active" press="onAwardPress">
               <cells>
                 <Text text="{winnersDetailed>actorName}" />
                 <Text text="{winnersDetailed>filmTitle}" />

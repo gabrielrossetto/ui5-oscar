@@ -1,6 +1,10 @@
 sap.ui.define(
-  ["sap/ui/core/UIComponent", "sap/ui/model/odata/v4/ODataModel"],
-  function (UIComponent, ODataModel) {
+  [
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/odata/v4/ODataModel",
+    "sap/ui/model/resource/ResourceModel",
+  ],
+  function (UIComponent, ODataModel, ResourceModel) {
     "use strict";
 
     return UIComponent.extend("oscar.challenge.Component", {
@@ -23,6 +27,11 @@ sap.ui.define(
           serviceUrl: oServiceUrl,
           synchronizationMode: "None",
         });
+
+        var i18nModel = new ResourceModel({
+          bundleName: "oscar.challenge.i18n.i18n",
+        });
+        this.setModel(i18nModel, "i18n");
 
         this.setModel(oModel, "winners");
         this.setModel(oModel, "actors");

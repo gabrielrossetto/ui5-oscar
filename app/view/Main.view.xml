@@ -1,32 +1,36 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="oscar.challenge.controller.Main">
   <App id="app">
-    <Page title="Oscar Actors Winners List">
+    <Page title="{i18n>appTitle}">
       <customHeader>
         <Bar design="Header" class="customBar">
           <contentLeft>
-            <Title text="Oscar Actors Winners List" />
+            <Title text="{i18n>appTitle}" class="headerTitle" />
           </contentLeft>
           <contentRight>
-            <SearchField placeholder="Search" liveChange="onSearch" width="400px" />
-            <Button text="New Award" icon="sap-icon://add" press="onAddAward" type="Emphasized" />
+            <SearchField placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" width="400px" />
+            <Button text="{i18n>newAward}" icon="sap-icon://add" press="onAddAward"
+              type="Emphasized" />
           </contentRight>
         </Bar>
       </customHeader>
 
       <content>
-        <Table id="winnersTable" items="{winnersDetailed>/Awards}">
+        <Table id="winnersTable"
+          items="{winnersDetailed>/Awards}"
+          alternateRowColors="false"
+          backgroundDesign="Transparent">
           <columns>
             <Column>
-              <Text text="Actor" />
+              <Text text="{i18n>columnActor}" />
             </Column>
             <Column>
-              <Text text="Movie" />
+              <Text text="{i18n>columnMovie}" />
             </Column>
             <Column>
-              <Text text="Award Category" />
+              <Text text="{i18n>columnAwardCategory}" />
             </Column>
             <Column>
-              <Text text="Award Year" />
+              <Text text="{i18n>columnAwardYear}" />
             </Column>
           </columns>
           <items>

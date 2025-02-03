@@ -2,33 +2,32 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   controllerName="oscar.challenge.controller.AwardForm">
-  <Page title="Award Form">
+  <Page title="{i18n>awardFormTitle}">
     <content>
       <VBox class="sapUiSmallMargin">
-        <Label text="Actor/Actress" required="true" />
+        <Label text="{i18n>labelActor}" required="true" />
         <Select id="actorSelect" selectedKey="{award>/actor_ID}" items="{actors>/Actors}">
           <core:ListItem key="{actors>ID}" text="{actors>name}" />
         </Select>
 
+        <Label text="{i18n>labelMovie}" required="true" />
         <Select id="movieSelect" selectedKey="{award>/film_ID}" items="{films>/Films}">
           <core:ListItem key="{films>ID}" text="{films>title}" />
         </Select>
 
+        <Label text="{i18n>labelAwardCategory}" required="true" />
         <Select id="categorySelect" selectedKey="{award>/category_ID}"
           items="{categories>/Categories}">
           <core:ListItem key="{categories>ID}" text="{categories>name}" />
         </Select>
-
-
       </VBox>
     </content>
 
     <footer>
       <Bar>
         <contentRight>
-          <Button text="Cancel" press="onCancel" />
-          <Button text="{= ${award>/ID} ? 'Save' : 'New Award'}" press="onSaveAward"
-            type="Emphasized" />
+          <Button id="saveButton" text="{i18n>buttonNew}" press="onSaveAward" type="Emphasized" />
+          <Button text="{i18n>buttonCancel}" press="onCancel" />
         </contentRight>
       </Bar>
     </footer>

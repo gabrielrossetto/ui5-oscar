@@ -13,6 +13,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
       this.getView().setModel(oComponent.getModel("actors"), "actors");
       this.getView().setModel(oComponent.getModel("films"), "films");
       this.getView().setModel(oComponent.getModel("categories"), "categories");
+
+      this.getView().attachModelContextChange(this._onModelContextChange, this);
+    },
+
+    _onModelContextChange: function () {
+      var oView = this.getView();
+      var oI18nModel = oView.getModel("i18n");
+
+      if (oI18nModel) {
+        this._updateButtonLabel();
+        oView.detachModelContextChange(this._onModelContextChange, this);
+      }
+    },
+
+    _updateButtonLabel: function (sAwardId) {
+      var oView = this.getView();
+      var oI18nModel = oView.getModel("i18n");
+
+      if (!oI18nModel) return;
+
+      var oResourceBundle = oI18nModel.getResourceBundle();
+      var oSaveButton = oView.byId("saveButton");
+
+      if (oSaveButton) {
+        oSaveButton.setText(
+          sAwardId
+            ? oResourceBundle.getText("buttonSave")
+            : oResourceBundle.getText("buttonNew")
+        );
+      }
     },
 
     _onRouteMatched: function (oEvent) {
@@ -23,6 +53,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
       } else {
         this._resetForm();
       }
+
+      this._updateButtonLabel(sAwardId);
     },
 
     _loadAwardData: function (sAwardId) {

@@ -2,10 +2,10 @@ sap.ui.define(
   ["sap/ui/core/mvc/Controller", "../model/models"],
   function (Controller, models) {
     "use strict";
+
     return Controller.extend("oscar.challenge.controller.Main", {
       onInit: function () {
-        var oComponent = this.getOwnerComponent();
-        var oModel = models.createWinnersModel(oComponent);
+        var oModel = models.getModel("winners", this.getOwnerComponent());
         if (!oModel) return;
 
         this.getView().setModel(oModel, "winners");
@@ -20,6 +20,7 @@ sap.ui.define(
           this
         );
       },
+
       _loadAdditionalData: async function () {
         var oModel = this.getView().getModel("winners");
 
@@ -43,26 +44,32 @@ sap.ui.define(
 
         var aDetailedAwards = await Promise.all(aPromises);
 
-        var oDetailedModel = new sap.ui.model.json.JSONModel({
-          Awards: aDetailedAwards,
-        });
-        this.getView().setModel(oDetailedModel, "winnersDetailed");
+        aDetailedAwards.sort((a, b) => b.year - a.year);
+
+        this.getView().setModel(
+          models.createJSONModel({ Awards: aDetailedAwards }),
+          "winnersDetailed"
+        );
       },
-      _fetchActorName: async function (actorId) {
+
+      _fetchActorName: function (actorId) {
         return fetch(`/odata/v4/oscar/Actors('${actorId}')`).then((res) =>
           res.json()
         );
       },
-      _fetchFilmTitle: async function (filmId) {
+
+      _fetchFilmTitle: function (filmId) {
         return fetch(`/odata/v4/oscar/Films('${filmId}')`).then((res) =>
           res.json()
         );
       },
-      _fetchCategoryName: async function (categoryId) {
+
+      _fetchCategoryName: function (categoryId) {
         return fetch(`/odata/v4/oscar/Categories('${categoryId}')`).then(
           (res) => res.json()
         );
       },
+
       onSearch: function (oEvent) {
         var sQuery = oEvent.getParameter("newValue");
         var oBinding = this.byId("winnersTable").getBinding("items");
@@ -73,13 +80,16 @@ sap.ui.define(
         );
         oBinding.filter([oFilter]);
       },
+
       onAddAward: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("AwardForm", {});
       },
+
       _reloadData: function () {
         this._loadAdditionalData();
       },
+
       onAwardPress: function (oEvent) {
         var oItem = oEvent.getSource();
         var oCtx = oItem.getBindingContext("winnersDetailed");

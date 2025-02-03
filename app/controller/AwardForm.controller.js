@@ -1,4 +1,4 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
+sap.ui.define(["sap/ui/core/mvc/Controller", "../model/models"], function (Controller, models) {
   "use strict";
 
   return Controller.extend("oscar.challenge.controller.AwardForm", {
@@ -6,35 +6,30 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
       var oComponent = this.getOwnerComponent();
       var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-      oRouter
-        .getRoute("AwardForm")
-        .attachPatternMatched(this._onRouteMatched, this);
+      oRouter.getRoute("AwardForm").attachPatternMatched(this._onRouteMatched, this);
 
-      this.getView().setModel(oComponent.getModel("actors"), "actors");
-      this.getView().setModel(oComponent.getModel("films"), "films");
-      this.getView().setModel(oComponent.getModel("categories"), "categories");
+      this.getView().setModel(models.getModel("actors", oComponent), "actors");
+      this.getView().setModel(models.getModel("films", oComponent), "films");
+      this.getView().setModel(models.getModel("categories", oComponent), "categories");
 
       this.getView().attachModelContextChange(this._onModelContextChange, this);
     },
 
     _onModelContextChange: function () {
-      var oView = this.getView();
-      var oI18nModel = oView.getModel("i18n");
+      var oI18nModel = models.getI18nModel(this.getOwnerComponent());
 
       if (oI18nModel) {
         this._updateButtonLabel();
-        oView.detachModelContextChange(this._onModelContextChange, this);
+        this.getView().detachModelContextChange(this._onModelContextChange, this);
       }
     },
 
     _updateButtonLabel: function (sAwardId) {
-      var oView = this.getView();
-      var oI18nModel = oView.getModel("i18n");
-
+      var oI18nModel = models.getI18nModel(this.getOwnerComponent());
       if (!oI18nModel) return;
 
       var oResourceBundle = oI18nModel.getResourceBundle();
-      var oSaveButton = oView.byId("saveButton");
+      var oSaveButton = this.getView().byId("saveButton");
 
       if (oSaveButton) {
         oSaveButton.setText(
@@ -58,17 +53,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
     },
 
     _loadAwardData: function (sAwardId) {
-      var oView = this.getView();
-
       fetch(`/odata/v4/oscar/Awards('${sAwardId}')`)
         .then((response) => response.json())
         .then((oData) => {
-          var oModel = new sap.ui.model.json.JSONModel(oData);
-          oView.setModel(oModel, "award");
+          var oModel = models.createJSONModel(oData);
+          this.getView().setModel(oModel, "award");
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch((error) => console.error(error));
     },
 
     _resetForm: function () {
@@ -78,21 +69,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
         category_ID: "",
         year: new Date().getFullYear(),
       };
-      this.getView().setModel(
-        new sap.ui.model.json.JSONModel(oEmptyData),
-        "award"
-      );
+      this.getView().setModel(models.createJSONModel(oEmptyData), "award");
     },
 
     onCancel: function () {
-      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-      oRouter.navTo("Main");
+      sap.ui.core.UIComponent.getRouterFor(this).navTo("Main");
     },
 
     onSaveAward: function () {
-      var oView = this.getView();
-      var oAward = oView.getModel("award").getData();
-
+      var oAward = this.getView().getModel("award").getData();
       if (!oAward.actor_ID || !oAward.film_ID || !oAward.category_ID) return;
 
       var sUrl = "/odata/v4/oscar/Awards";
@@ -109,15 +94,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
         body: JSON.stringify(oAward),
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then(() => {
           sap.ui.getCore().getEventBus().publish("AwardsChannel", "AwardAdded");
-
-          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          oRouter.navTo("Main");
+          sap.ui.core.UIComponent.getRouterFor(this).navTo("Main");
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch((error) => console.error(error));
     },
   });
 });

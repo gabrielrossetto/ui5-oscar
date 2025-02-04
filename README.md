@@ -2,24 +2,28 @@
 
 The Oscar Challenge is a web application developed using SAP UI5 and OData to manage Oscar awards for the Best Actor and Best Actress categories. The application provides an intuitive and efficient interface for listing, searching, creating, and editing award records.
 
+![SAP UI5](https://img.shields.io/badge/SAP%20UI5-%230081CB.svg?style=for-the-badge&logo=sap&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 
 ## Table of Contents
 
 - [Oscar Challenge](#oscar-challenge)
   - [Table of Contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [How to Run](#how-to-run)
-  - [Demo](#demo)
-  - [Features](#features)
-  - [Documents](#documents)
+  - [📜 Prerequisites](#-prerequisites)
+  - [🛠 How to Run](#-how-to-run)
+  - [🎥 Video Demo](#-video-demo)
+  - [🌟 Features](#-features)
+  - [📑 Documents](#-documents)
 
-## Prerequisites
+## 📜 Prerequisites
 
 - Install [node and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 - Install `npm add -g @sap/cds-dk`
 
-## How to Run
+## 🛠 How to Run
 
 To run the application, you can simply run `npm run start` or `npm run start:ts`, both will work correctly.
 
@@ -28,15 +32,29 @@ To run the application, you can simply run `npm run start` or `npm run start:ts`
 > - Windows OS can have problems with node_modules path, if it happens, it's recommended to use `npm run start` to run the application.
 > - If `npm run start` does not start with the .ts service, please run `npm run start:ts` it will force the application to use the .ts service.
 
-## Demo
+## 🎥 Video Demo
 
-![Award Creation](https://github.com/user-attachments/assets/6c456c1a-000d-4110-945b-b812cf8cf369)
+https://github.com/user-attachments/assets/6c456c1a-000d-4110-945b-b812cf8cf369
 
-## Features
+## 🌟 Features
 
-Features
+Core Features (From Challenge)
+- [x] List of Oscar winners
+- [x] Search by actor, movie, or category
+- [x] Sorting by award year
+- [x] Form to create new awards
+- [x] Edit existing awards
+- [x] Internationalization (i18n)
 
-## Documents
+Additional Features Implemented
+- [x] Toast notifications for success/error messages
+- [x] Unit tests with Jest
+- [x] Cypress tests for end-to-end validation
+- [x] Improved routing
+- [x] Documentation
+- [x] UI enhancements for better responsiveness
+
+## 📑 Documents
 
 Documents
 

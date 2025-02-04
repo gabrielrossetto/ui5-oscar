@@ -1,4 +1,4 @@
-# 🎭 Oscar Challenge
+# Oscar Challenge
 
 The Oscar Challenge is a web application developed using SAP UI5 and OData to manage Oscar awards for the Best Actor and Best Actress categories. The application provides an intuitive and efficient interface for listing, searching, creating, and editing award records.
 
@@ -6,7 +6,7 @@ The Oscar Challenge is a web application developed using SAP UI5 and OData to ma
 
 ## Table of Contents
 
-- [🎭 Oscar Challenge](#-oscar-challenge)
+- [Oscar Challenge](#oscar-challenge)
   - [Table of Contents](#table-of-contents)
   - [Prerequisites](#prerequisites)
   - [How to Run](#how-to-run)
@@ -30,7 +30,7 @@ To run the application, you can simply run `npm run start` or `npm run start:ts`
 
 ## Demo
 
-![Award Creation]([./docs/demo/video.gif](https://github.com/user-attachments/assets/6c456c1a-000d-4110-945b-b812cf8cf369))
+![Award Creation](https://github.com/user-attachments/assets/6c456c1a-000d-4110-945b-b812cf8cf369)
 
 ## Features
 

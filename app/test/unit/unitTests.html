@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Unit Tests</title>
+    <script 
+        src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-async="true"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-resourceroots='{
+          "oscar.challenge": "./",
+          "test.unit": "./test/unit/"
+      }'
+    >      
+    </script>
+    <script src="https://code.jquery.com/qunit/qunit-2.17.2.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.17.2.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+          sap.ui.require([
+              "test/unit/Main.controller.qunit"
+          ], function () {
+              QUnit.start();
+          }, function (err) {
+              console.error("Erro ao carregar Main.controller.qunit.js:", err);
+          });
+      });
+    </script>
+</body>
+</html>

@@ -5,7 +5,6 @@ The Oscar Challenge is a web application developed using SAP UI5 and OData to ma
 ![SAP UI5](https://img.shields.io/badge/SAP%20UI5-%230081CB.svg?style=for-the-badge&logo=sap&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 
 ## Table of Contents
@@ -48,8 +47,7 @@ Core Features (From Challenge)
 
 Additional Features Implemented
 - [x] Toast notifications for success/error messages
-- [x] Unit tests with Jest
-- [x] Cypress tests for end-to-end validation
+- [x] Unit tests with QUnit
 - [x] Improved routing
 - [x] Documentation
 - [x] UI enhancements for better responsiveness

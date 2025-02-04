@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "../model/models"],
-  function (Controller, models) {
+  ["sap/ui/core/mvc/Controller", "../model/models", "sap/m/MessageToast"],
+  function (Controller, models, MessageToast) {
     "use strict";
 
     return Controller.extend("oscar.challenge.controller.AwardForm", {
@@ -70,20 +70,29 @@ sap.ui.define(
       },
 
       _loadAwardData: function (sAwardId) {
+        var oI18nModel = models.getI18nModel(this.getOwnerComponent());
+        var oResourceBundle = oI18nModel.getResourceBundle();
+
         fetch(`/odata/v4/oscar/Awards('${sAwardId}')`)
           .then((response) => response.json())
           .then((oData) => {
             var oModel = models.createJSONModel(oData);
             this.getView().setModel(oModel, "award");
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            console.error(error);
+            MessageToast.show(
+              error?.message ||
+                oResourceBundle.getText("awardFormLoadErrorMessage")
+            );
+          });
       },
 
       _resetForm: function () {
         var oEmptyData = {
-          actor_ID: "",
-          film_ID: "",
-          category_ID: "",
+          actor_ID: this.byId("actorSelect").getSelectedKey(),
+          film_ID: this.byId("movieSelect").getSelectedKey(),
+          category_ID: this.byId("categorySelect").getSelectedKey(),
           year: new Date().getFullYear(),
         };
         this.getView().setModel(models.createJSONModel(oEmptyData), "award");
@@ -94,6 +103,8 @@ sap.ui.define(
       },
 
       onSaveAward: function () {
+        var oI18nModel = models.getI18nModel(this.getOwnerComponent());
+        var oResourceBundle = oI18nModel.getResourceBundle();
         var oAward = this.getView().getModel("award").getData();
 
         if (!oAward.actor_ID || !oAward.film_ID || !oAward.category_ID) return;
@@ -117,9 +128,25 @@ sap.ui.define(
               .getCore()
               .getEventBus()
               .publish("AwardsChannel", "AwardAdded");
-            sap.ui.core.UIComponent.getRouterFor(this).navTo("Main");
+
+            MessageToast.show(
+              oResourceBundle.getText("awardFormSaveSuccessMessage"),
+              {
+                duration: 1000,
+                animationDuration: 100,
+                onClose: () => {
+                  sap.ui.core.UIComponent.getRouterFor(this).navTo("Main");
+                },
+              }
+            );
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            console.error(error);
+            MessageToast.show(
+              error?.message ||
+                oResourceBundle.getText("awardFormSaveErrorMessage")
+            );
+          });
       },
     });
   }

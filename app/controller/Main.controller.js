@@ -28,50 +28,36 @@ sap.ui.define(
       _loadAdditionalData: async function () {
         var oModel = this.getView().getModel("winners");
 
-        var aContexts = await oModel.bindList("/Awards").requestContexts();
-        var aAwards = aContexts.map((context) => context.getObject());
+        try {
+          var aContexts = await oModel
+            .bindList("/Awards", null, null, null, {
+              $expand: {
+                actor: true,
+                film: true,
+                category: true,
+              },
+            })
+            .requestContexts();
 
-        var aPromises = aAwards.map(async (award) => {
-          let [actor, film, category] = await Promise.all([
-            this._fetchActorName(award.actor_ID),
-            this._fetchFilmTitle(award.film_ID),
-            this._fetchCategoryName(award.category_ID),
-          ]);
+          var aAwards = aContexts.map((context) => {
+            var oAward = context.getObject();
+            return {
+              ...oAward,
+              actorName: oAward.actor?.name || "Unknown Actor",
+              filmTitle: oAward.film?.title || "Unknown Film",
+              categoryName: oAward.category?.name || "Unknown Category",
+            };
+          });
 
-          return {
-            ...award,
-            actorName: actor.name,
-            filmTitle: film.title,
-            categoryName: category.name,
-          };
-        });
+          aAwards.sort((a, b) => b.year - a.year);
 
-        var aDetailedAwards = await Promise.all(aPromises);
-
-        aDetailedAwards.sort((a, b) => b.year - a.year);
-
-        this.getView().setModel(
-          models.createJSONModel({ Awards: aDetailedAwards }),
-          "winnersDetailed"
-        );
-      },
-
-      _fetchActorName: function (actorId) {
-        return fetch(`/odata/v4/oscar/Actors('${actorId}')`).then((res) =>
-          res.json()
-        );
-      },
-
-      _fetchFilmTitle: function (filmId) {
-        return fetch(`/odata/v4/oscar/Films('${filmId}')`).then((res) =>
-          res.json()
-        );
-      },
-
-      _fetchCategoryName: function (categoryId) {
-        return fetch(`/odata/v4/oscar/Categories('${categoryId}')`).then(
-          (res) => res.json()
-        );
+          this.getView().setModel(
+            models.createJSONModel({ Awards: aAwards }),
+            "winnersDetailed"
+          );
+        } catch (error) {
+          console.error("Error fetching Awards data:", error);
+        }
       },
 
       onSearch: function (oEvent) {

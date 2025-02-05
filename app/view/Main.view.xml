@@ -2,23 +2,19 @@
   <App id="app">
     <Page title="{i18n>appTitle}">
       <customHeader>
-        <Bar design="Header" class="customBar">
-          <contentLeft>
-            <Title text="{i18n>appTitle}" class="headerTitle" />
-          </contentLeft>
-          <contentRight>
-            <SearchField placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" width="400px" />
-            <Button text="{i18n>newAward}" icon="sap-icon://add" press="onAddAward"
-              type="Emphasized" />
-          </contentRight>
-        </Bar>
+        <OverflowToolbar>
+          <Title text="{i18n>appTitle}" class="headerTitle" />
+          <ToolbarSpacer />
+          <SearchField placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" width="auto" />
+          <Button text="{i18n>newAward}" icon="sap-icon://add" press="onAddAward" type="Emphasized" />
+        </OverflowToolbar>
       </customHeader>
 
       <content>
-        <Table id="winnersTable"
-          items="{winnersDetailed>/Awards}"
-          alternateRowColors="false"
-          backgroundDesign="Transparent">
+        <!-- Table for Desktop -->
+        <Table id="winnersTable" items="{winnersDetailed>/Awards}" width="100%"
+          growing="true" growingScrollToLoad="true"
+          backgroundDesign="Transparent" visible="{device>/isDesktop}">
           <columns>
             <Column>
               <Text text="{i18n>columnActor}" />
@@ -44,6 +40,15 @@
             </ColumnListItem>
           </items>
         </Table>
+
+        <List id="winnersList" items="{winnersDetailed>/Awards}" growing="true"
+          growingScrollToLoad="true" visible="{device>/isPhone}">
+          <items>
+            <StandardListItem title="{winnersDetailed>filmTitle}"
+              description="{winnersDetailed>actorName}"
+              type="Active" press="onAwardPress" />
+          </items>
+        </List>
       </content>
     </Page>
   </App>

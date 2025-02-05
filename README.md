@@ -166,16 +166,6 @@ Uses an i18n model for language support.
 
 Dynamically updates button labels and UI texts.
 
-### Custom Styling (style.css)
-
-Provides minor UI enhancements:
-
-Custom bar background.
-
-Bold headers.
-
-Rounded buttons.
-
 ## External References
 
 - SAP UI5 Documentation: https://sapui5.hana.ondemand.com/#/topic

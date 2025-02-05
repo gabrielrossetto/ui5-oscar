@@ -11,7 +11,6 @@
       </customHeader>
 
       <content>
-        <!-- Table for Desktop -->
         <Table id="winnersTable" items="{winnersDetailed>/Awards}" width="100%"
           growing="true" growingScrollToLoad="true"
           backgroundDesign="Transparent" visible="{device>/isDesktop}">
